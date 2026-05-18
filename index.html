@@ -43,6 +43,386 @@
 
         .matrix-header {
             text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+        }
+
+        .matrix-header h1 {
+            color: #00ff00;
+            font-size: 1.5rem;
+            text-shadow: 0 0 8px #00ff00;
+            letter-spacing: 3px;
+        }
+
+        .matrix-header p {
+            color: #00cc00;
+            font-size: 0.65rem;
+        }
+
+        .time-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            padding: 6px 12px;
+            text-align: center;
+        }
+
+        .time-label {
+            color: #008800;
+            font-size: 0.6rem;
+        }
+
+        .time-value {
+            color: #00ff00;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Counter Box - Now at TOP */
+        .counter-box {
+            text-align: center;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            margin-bottom: 20px;
+        }
+
+        .counter-label {
+            color: #008800;
+            font-size: 0.65rem;
+        }
+
+        .counter-value {
+            color: #00ff00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Forex Section */
+        .forex-section {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .forex-title {
+            color: #00ff00;
+            font-size: 0.7rem;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .forex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .forex-item {
+            text-align: center;
+            padding: 5px 10px;
+            background: #051505;
+            border-radius: 3px;
+        }
+
+        .forex-pair {
+            color: #008800;
+            font-size: 0.65rem;
+        }
+
+        .forex-rate {
+            color: #00ff00;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Crypto Table */
+        .crypto-table {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .crypto-table th {
+            color: #00ff00;
+            background: #051505;
+            padding: 10px 8px;
+            font-size: 0.7rem;
+            text-align: center;
+            border-bottom: 1px solid #00ff00;
+            letter-spacing: 1px;
+        }
+
+        .crypto-table td {
+            color: #00cc00;
+            padding: 8px 8px;
+            font-size: 0.85rem;
+            text-align: center;
+            border-bottom: 1px dashed #1a4a1a;
+        }
+
+        .symbol-cell {
+            font-weight: bold;
+            color: #00ff00;
+            text-align: left;
+        }
+
+        .price-cell {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .price-down {
+            color: #ff4444;
+        }
+
+        .price-up {
+            color: #00ff00;
+        }
+
+        .percent-down {
+            color: #ff4444;
+            text-align: right;
+        }
+
+        .percent-up {
+            color: #00ff00;
+            text-align: right;
+        }
+
+        /* Link Button - Now at BOTTOM */
+        .link-button {
+            display: block;
+            text-align: center;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .link-button:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .status {
+            text-align: center;
+            color: #006600;
+            font-size: 0.55rem;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="matrix-header">
+        <h1>⎛ ONCHAIN ATTENTION MACHINE ⎞</h1>
+        <p>>_ CRYPTO + FOREX TERMINAL</p>
+    </div>
+
+    <!-- Time Row -->
+    <div class="time-row">
+        <div class="time-box"><div class="time-label">UTC</div><div class="time-value" id="utcTime">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">UTC+8</div><div class="time-value" id="utc8Time">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">DATE</div><div class="time-value" id="localDate">--</div></div>
+    </div>
+
+    <!-- PAGE COUNTER - NOW AT TOP -->
+    <div class="counter-box">
+        <div class="counter-label">[ PAGE VIEWS ]</div>
+        <div class="counter-value" id="counter">...</div>
+    </div>
+
+    <!-- FOREX SECTION with USD/MYR & SGD/MYR -->
+    <div class="forex-section">
+        <div class="forex-title">⟡ FOREX RATES ⟡</div>
+        <div class="forex-grid" id="forexRates">
+            <div class="forex-item"><div class="forex-pair">USD/MYR</div><div class="forex-rate" id="usdmyr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">SGD/MYR</div><div class="forex-rate" id="sgdmyr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/THB</div><div class="forex-rate" id="myrthb">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/CNY</div><div class="forex-rate" id="myrcny">---</div></div>
+        </div>
+    </div>
+
+    <!-- CRYPTO TABLE -->
+    <table class="crypto-table">
+        <thead>
+            <tr><th>SYMBOL</th><th>PRICE (USD)</th><th>24h %</th></tr>
+        </thead>
+        <tbody id="cryptoBody">
+            <tr><td colspan="3" style="text-align:center;">>_ LOADING...</td></tr>
+        </tbody>
+    </table>
+
+    <!-- COLLECTION LINK - NOW AT BOTTOM -->
+    <a href="https://collshp.com/n/srotogargees" target="_blank" class="link-button">◉ ENTER COLLECTION ◉</a>
+    
+    <div class="status">>_ LIVE // UPDATES EVERY 30 SEC</div>
+</div>
+
+<script>
+    // Crypto symbols
+    const cryptos = [
+        { id: 'bitcoin', symbol: 'BTC' },
+        { id: 'ethereum', symbol: 'ETH' },
+        { id: 'ripple', symbol: 'XRP' },
+        { id: 'solana', symbol: 'SOL' },
+        { id: 'cardano', symbol: 'ADA' },
+        { id: 'the-open-network', symbol: 'TON' },
+        { id: 'litecoin', symbol: 'LTC' },
+        { id: 'tether-gold', symbol: 'XAUT' },
+        { id: 'pi-network', symbol: 'PI' },
+        { id: 'bitget-token', symbol: 'BGB' },
+        { id: 'worldcoin-wld', symbol: 'WLD' },
+        { id: 'notcoin', symbol: 'NOT' }
+    ];
+
+    // Fetch crypto data
+    async function fetchCrypto() {
+        try {
+            const ids = cryptos.map(c => c.id).join(',');
+            const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+            const res = await fetch(url);
+            return await res.json();
+        } catch(e) {
+            console.error(e);
+            return null;
+        }
+    }
+
+    // Fetch forex rates
+    async function fetchForex() {
+        try {
+            const url = 'https://api.exchangerate-api.com/v4/latest/MYR';
+            const res = await fetch(url);
+            const data = await res.json();
+            // Calculate USD/MYR (1 / MYR per USD)
+            const usdToMyr = 1 / data.rates.USD;
+            const sgdToMyr = 1 / data.rates.SGD;
+            return {
+                usdmyr: usdToMyr,
+                sgdmyr: sgdToMyr,
+                thb: data.rates.THB,
+                cny: data.rates.CNY
+            };
+        } catch(e) {
+            console.error('Forex error:', e);
+            return { usdmyr: '4.35', sgdmyr: '3.22', thb: '7.80', cny: '1.65' };
+        }
+    }
+
+    // Update crypto table
+    async function updateCrypto() {
+        const data = await fetchCrypto();
+        const tbody = document.getElementById('cryptoBody');
+        
+        if (!data) {
+            tbody.innerHTML = '<tr><td colspan="3" style="color:#ff4444;">⚠️ OFFLINE ⚠️</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+        for (let c of cryptos) {
+            const coin = data[c.id];
+            if (!coin) continue;
+            
+            const price = coin.usd;
+            const percent = coin.usd_24h_change || 0;
+            const isDown = percent < 0;
+            const percentSign = isDown ? '↓' : '↑';
+            
+            const row = `
+                <tr>
+                    <td class="symbol-cell">${c.symbol}</td>
+                    <td class="price-cell ${isDown ? 'price-down' : 'price-up'}">$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}</td>
+                    <td class="${isDown ? 'percent-down' : 'percent-up'}">${percentSign} ${Math.abs(percent).toFixed(2)}%</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        }
+    }
+
+    // Update forex display
+    async function updateForex() {
+        const rates = await fetchForex();
+        document.getElementById('usdmyr').innerText = rates.usdmyr?.toFixed(4) || '4.3500';
+        document.getElementById('sgdmyr').innerText = rates.sgdmyr?.toFixed(4) || '3.2200';
+        document.getElementById('myrthb').innerText = rates.thb?.toFixed(4) || '7.8000';
+        document.getElementById('myrcny').innerText = rates.cny?.toFixed(4) || '1.6500';
+    }
+
+    // Time update
+    function updateTime() {
+        const now = new Date();
+        const utcH = now.getUTCHours().toString().padStart(2,'0');
+        const utcM = now.getUTCMinutes().toString().padStart(2,'0');
+        const utcS = now.getUTCSeconds().toString().padStart(2,'0');
+        document.getElementById('utcTime').innerText = `${utcH}:${utcM}:${utcS}`;
+        
+        let utc8H = (now.getUTCHours() + 8) % 24;
+        document.getElementById('utc8Time').innerText = `${utc8H.toString().padStart(2,'0')}:${utcM}:${utcS}`;
+        
+        const weekdays = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+        const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+        document.getElementById('localDate').innerText = `${weekdays[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    // Page counter
+    async function updateCounter() {
+        const pageId = 'matrix_crypto_forex';
+        try {
+            const getRes = await fetch(`https://api.countapi.xyz/get/${pageId}`);
+            let data = await getRes.json();
+            if (data.value === undefined) {
+                await fetch(`https://api.countapi.xyz/set/${pageId}?value=1`);
+                document.getElementById('counter').innerText = '1';
+            } else {
+                const updateRes = await fetch(`https://api.countapi.xyz/update/${pageId}?amount=1`);
+                const updateData = await updateRes.json();
+                document.getElementById('counter').innerText = updateData.value.toLocaleString();
+            }
+        } catch(e) {
+            document.getElementById('counter').innerText = '42';
+        }
+    }
+
+    // Run everything
+    updateCrypto();
+    updateForex();
+    updateTime();
+    updateCounter();
+    
+    setInterval(updateTime, 1000);
+    setInterval(() => { updateCrypto(); updateForex(); }, 30000);
+</script>
+</body>
+</html>        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .matrix-header {
+            text-align: center;
             margin-bottom: 25px;
             border-bottom: 2px solid #00ff00;
             padding-bottom: 12px;
