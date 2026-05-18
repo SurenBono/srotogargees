@@ -1,5 +1,5 @@
 # srotogargees
-... just a Website 
+... just a local quick trade packed infos
 
 https://surenbono.github.io/srotogargees/
 
