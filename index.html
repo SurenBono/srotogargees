@@ -345,6 +345,36 @@
     setInterval(updateDashboard, 30000);
 </script>
 </body>
+</html> 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        document.getElementById('localDate').textContent = `${weekdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    async function updatePageCounter() {
+        const pageId = 'matrix_crypto_suren';
+        try {
+            const getResponse = await fetch(`https://api.countapi.xyz/get/${pageId}`);
+            let data = await getResponse.json();
+            if (data.value === undefined) {
+                await fetch(`https://api.countapi.xyz/set/${pageId}?value=1`);
+                document.getElementById('counter').textContent = '1';
+            } else {
+                const updateResponse = await fetch(`https://api.countapi.xyz/update/${pageId}?amount=1`);
+                const updateData = await updateResponse.json();
+                document.getElementById('counter').textContent = updateData.value.toLocaleString();
+            }
+        } catch (error) {
+            document.getElementById('counter').textContent = '42';
+        }
+    }
+
+    // Run everything
+    updateDashboard();
+    updateTimeAndDate();
+    updatePageCounter();
+    setInterval(updateTimeAndDate, 1000);
+    setInterval(updateDashboard, 30000);
+</script>
+</body>
 </html>            z-index: 0;
         }
 
