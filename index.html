@@ -351,6 +351,323 @@
     setInterval(updateTable, 30000);
 </script>
 </body>
+</html>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .matrix-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 12px;
+        }
+
+        .matrix-header h1 {
+            color: #00ff00;
+            font-size: 1.6rem;
+            text-shadow: 0 0 8px #00ff00;
+            letter-spacing: 3px;
+        }
+
+        .matrix-header p {
+            color: #00cc00;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        /* Time row */
+        .time-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            padding: 8px 15px;
+            text-align: center;
+        }
+
+        .time-label {
+            color: #008800;
+            font-size: 0.65rem;
+        }
+
+        .time-value {
+            color: #00ff00;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* SIMPLE LIST TABLE */
+        .crypto-table {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .crypto-table th {
+            color: #00ff00;
+            background: #051505;
+            padding: 10px 6px;
+            font-size: 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid #00ff00;
+            letter-spacing: 1px;
+        }
+
+        .crypto-table td {
+            color: #00cc00;
+            padding: 8px 6px;
+            font-size: 0.8rem;
+            border-bottom: 1px dashed #1a4a1a;
+        }
+
+        .symbol-cell {
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .name-cell {
+            font-size: 0.65rem;
+            color: #008800;
+        }
+
+        .price-cell {
+            font-weight: bold;
+        }
+
+        .price-down {
+            color: #ff4444;
+        }
+
+        .price-up {
+            color: #00ff00;
+        }
+
+        .percent-down {
+            color: #ff4444;
+        }
+
+        .percent-up {
+            color: #00ff00;
+        }
+
+        .high-cell, .low-cell {
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+
+        /* Counter */
+        .counter-box {
+            text-align: center;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            margin-top: 10px;
+        }
+
+        .counter-label {
+            color: #008800;
+            font-size: 0.7rem;
+        }
+
+        .counter-value {
+            color: #00ff00;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .status {
+            text-align: center;
+            color: #006600;
+            font-size: 0.6rem;
+            margin-top: 15px;
+        }
+
+        /* Link button */
+        .matrix-link {
+            display: block;
+            text-align: center;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .matrix-link:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="matrix-header">
+        <h1>⎛ MATRIX TERMINAL ⎞</h1>
+        <p>>_ ONCHAIN ATTENTION MACHINE</p>
+    </div>
+
+    <!-- Time Row -->
+    <div class="time-row">
+        <div class="time-box"><div class="time-label">UTC</div><div class="time-value" id="utcTime">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">UTC+8</div><div class="time-value" id="utc8Time">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">DATE</div><div class="time-value" id="localDate">--</div></div>
+    </div>
+
+    <!-- Your Link -->
+    <a href="https://collshp.com/n/srotogargees" target="_blank" class="matrix-link">⟡ ENTER COLLECTION ⟡</a>
+
+    <!-- SIMPLE LIST TABLE -->
+    <table class="crypto-table" id="cryptoTable">
+        <thead>
+            <tr>
+                <th>SYMBOL</th>
+                <th>NAME</th>
+                <th>PRICE (USD)</th>
+                <th>24h %</th>
+                <th>DAY HIGH</th>
+                <th>DAY LOW</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <tr><td colspan="6" style="text-align:center; color:#00ff00;">>_ LOADING DATA...</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Counter -->
+    <div class="counter-box">
+        <div class="counter-label">[ PAGE VIEWS ]</div>
+        <div class="counter-value" id="counter">...</div>
+    </div>
+    <div class="status">>_ LIVE UPDATES EVERY 30 SEC // MATRIX MODE</div>
+</div>
+
+<script>
+    const symbols = [
+        { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
+        { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
+        { id: 'ripple', symbol: 'XRP', name: 'XRP' },
+        { id: 'solana', symbol: 'SOL', name: 'Solana' },
+        { id: 'cardano', symbol: 'ADA', name: 'Cardano' },
+        { id: 'the-open-network', symbol: 'TON', name: 'Toncoin' },
+        { id: 'litecoin', symbol: 'LTC', name: 'Litecoin' },
+        { id: 'tether-gold', symbol: 'XAUT', name: 'Tether Gold' },
+        { id: 'pi-network', symbol: 'PI', name: 'Pi Network' },
+        { id: 'bitget-token', symbol: 'BGB', name: 'Bitget Token' },
+        { id: 'worldcoin-wld', symbol: 'WLD', name: 'Worldcoin' },
+        { id: 'notcoin', symbol: 'NOT', name: 'Notcoin' }
+    ];
+
+    async function fetchMarketData() {
+        try {
+            const ids = symbols.map(s => s.id).join(',');
+            // Get price + 24h change
+            const priceUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true&include_24hr_high=true&include_24hr_low=true`;
+            const response = await fetch(priceUrl);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            return null;
+        }
+    }
+
+    async function updateTable() {
+        const data = await fetchMarketData();
+        const tbody = document.getElementById('tableBody');
+        
+        if (!data || Object.keys(data).length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#ff4444;">⚠️ API OFFLINE ⚠️</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+        
+        for (let s of symbols) {
+            const coinData = data[s.id];
+            if (!coinData) continue;
+            
+            const price = coinData.usd || 0;
+            const percent = coinData.usd_24h_change || 0;
+            const high = coinData.usd_24h_high || price;
+            const low = coinData.usd_24h_low || price;
+            
+            const percentClass = percent >= 0 ? 'percent-up' : 'percent-down';
+            const percentSign = percent >= 0 ? '↑' : '↓';
+            const priceClass = percent >= 0 ? 'price-up' : 'price-down';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="symbol-cell">${s.symbol}</td>
+                <td class="name-cell">${s.name}</td>
+                <td class="price-cell ${priceClass}">$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}</td>
+                <td class="${percentClass}">${percentSign} ${Math.abs(percent).toFixed(2)}%</td>
+                <td class="high-cell">$${high.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                <td class="low-cell">$${low.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+            `;
+            tbody.appendChild(row);
+        }
+    }
+
+    // Time & Date
+    function updateTime() {
+        const now = new Date();
+        const utcH = now.getUTCHours().toString().padStart(2,'0');
+        const utcM = now.getUTCMinutes().toString().padStart(2,'0');
+        const utcS = now.getUTCSeconds().toString().padStart(2,'0');
+        document.getElementById('utcTime').textContent = `${utcH}:${utcM}:${utcS}`;
+        
+        let utc8H = (now.getUTCHours() + 8) % 24;
+        document.getElementById('utc8Time').textContent = `${utc8H.toString().padStart(2,'0')}:${utcM}:${utcS}`;
+        
+        const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('localDate').textContent = `${weekdays[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
+    }
+
+    // Page Counter (FIXED)
+    async function updateCounter() {
+        const pageId = 'suren_matrix_list';
+        try {
+            const getRes = await fetch(`https://api.countapi.xyz/get/${pageId}`);
+            let data = await getRes.json();
+            if (data.value === undefined) {
+                await fetch(`https://api.countapi.xyz/set/${pageId}?value=1`);
+                document.getElementById('counter').innerText = '1';
+            } else {
+                const updateRes = await fetch(`https://api.countapi.xyz/update/${pageId}?amount=1`);
+                const updateData = await updateRes.json();
+                document.getElementById('counter').innerText = updateData.value.toLocaleString();
+            }
+        } catch(e) {
+            document.getElementById('counter').innerText = '42';
+        }
+    }
+
+    // Run
+    updateTable();
+    updateTime();
+    updateCounter();
+    setInterval(updateTime, 1000);
+    setInterval(updateTable, 30000);
+</script>
+</body>
 </html> 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         document.getElementById('localDate').textContent = `${weekdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
     }
