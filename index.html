@@ -61,6 +61,8 @@
             <div class="forex-item"><div class="forex-pair">SGD/MYR</div><div class="forex-rate" id="sgdmyr">---</div></div>
             <div class="forex-item"><div class="forex-pair">MYR/THB</div><div class="forex-rate" id="myrthb">---</div></div>
             <div class="forex-item"><div class="forex-pair">MYR/CNY</div><div class="forex-rate" id="myrcny">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/IDR</div><div class="forex-rate" id="myridr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/INR</div><div class="forex-rate" id="myrinr">---</div></div>
         </div>
     </div>
 
@@ -283,11 +285,15 @@
             document.getElementById('sgdmyr').innerText = (1 / data.rates.SGD).toFixed(4);
             document.getElementById('myrthb').innerText = data.rates.THB.toFixed(4);
             document.getElementById('myrcny').innerText = data.rates.CNY.toFixed(4);
+            document.getElementById('myridr').innerText = data.rates.IDR.toFixed(2);
+            document.getElementById('myrinr').innerText = data.rates.INR.toFixed(2);
         } catch(e) { 
             document.getElementById('usdmyr').innerText = '3.95';
             document.getElementById('sgdmyr').innerText = '3.08';
             document.getElementById('myrthb').innerText = '8.27';
             document.getElementById('myrcny').innerText = '1.74';
+            document.getElementById('myridr').innerText = '3400';
+            document.getElementById('myrinr').innerText = '24.24';
         }
     }
 
