@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATRIX CRYPTO TERMINAL</title>
-    <!-- TradingView Charting Library -->
-    <script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.js"></script>
     <style>
         * {
             margin: 0;
@@ -20,7 +18,7 @@
             min-height: 100vh;
         }
 
-        /* Matrix rain effect background */
+        /* Matrix rain effect */
         body::before {
             content: "";
             position: fixed;
@@ -35,6 +33,319 @@
                 transparent 6px);
             pointer-events: none;
             z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .matrix-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 15px;
+        }
+
+        .matrix-header h1 {
+            color: #00ff00;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #00ff00;
+            letter-spacing: 4px;
+        }
+
+        .matrix-header p {
+            color: #00cc00;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        .time-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .time-card {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 5px rgba(0,255,0,0.3);
+        }
+
+        .time-label {
+            color: #008800;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        .time-value {
+            color: #00ff00;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .crypto-card {
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .crypto-card:hover {
+            border-color: #00ff88;
+            box-shadow: 0 0 15px rgba(0,255,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 8px;
+        }
+
+        .symbol {
+            color: #00ff00;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .name {
+            color: #008800;
+            font-size: 0.7rem;
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #00ff00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .change {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .change.up { color: #00ff00; }
+        .change.down { color: #ff4444; }
+
+        /* Link Button */
+        .link-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .matrix-link {
+            display: inline-block;
+            background: #0a0a0a;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0,255,0,0.3);
+        }
+
+        .matrix-link:hover {
+            background: #00ff00;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(0,255,0,0.6);
+        }
+
+        .counter-section {
+            text-align: center;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .counter-label {
+            color: #008800;
+            font-size: 0.8rem;
+        }
+
+        .counter-value {
+            color: #00ff00;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .status {
+            text-align: center;
+            color: #00cc00;
+            font-size: 0.7rem;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="matrix-header">
+        <h1>⎛ MATRIX CRYPTO TERMINAL ⎞</h1>
+        <p>>_ THE ONCHAIN ATTENTION MACHINE // LIVE DATA FEED</p>
+    </div>
+
+    <div class="time-section">
+        <div class="time-card"><div class="time-label">UTC</div><div class="time-value" id="utcTime">--:--:--</div></div>
+        <div class="time-card"><div class="time-label">UTC+8</div><div class="time-value" id="utc8Time">--:--:--</div></div>
+        <div class="time-card"><div class="time-label">LOCAL DATE</div><div class="time-value" id="localDate">Loading...</div></div>
+    </div>
+
+    <div class="crypto-grid" id="cryptoGrid">
+        <div style="color:#00ff00; text-align:center; grid-column:1/-1;">>_ LOADING CRYPTO DATA... PLEASE WAIT</div>
+    </div>
+
+    <!-- YOUR LINK -->
+    <div class="link-section">
+        <a href="https://collshp.com/n/srotogargees" target="_blank" class="matrix-link">
+            ⟡ ENTER COLLECTION ⟡
+        </a>
+    </div>
+
+    <div class="counter-section">
+        <div class="counter-label">[ PAGE VIEWS ]</div>
+        <div class="counter-value" id="counter">...</div>
+    </div>
+    <div class="status">>_ SYSTEM ACTIVE // UPDATES EVERY 30 SECONDS // MATRIX MODE ENGAGED</div>
+</div>
+
+<script>
+    // Using alternative API that works better
+    const symbols = [
+        { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
+        { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
+        { id: 'ripple', symbol: 'XRP', name: 'XRP' },
+        { id: 'solana', symbol: 'SOL', name: 'Solana' },
+        { id: 'cardano', symbol: 'ADA', name: 'Cardano' },
+        { id: 'the-open-network', symbol: 'TON', name: 'Toncoin' },
+        { id: 'litecoin', symbol: 'LTC', name: 'Litecoin' },
+        { id: 'tether-gold', symbol: 'XAUT', name: 'Tether Gold' },
+        { id: 'pi-network', symbol: 'PI', name: 'Pi Network' },
+        { id: 'bitget-token', symbol: 'BGB', name: 'Bitget Token' },
+        { id: 'worldcoin-wld', symbol: 'WLD', name: 'Worldcoin' },
+        { id: 'notcoin', symbol: 'NOT', name: 'Notcoin' }
+    ];
+
+    async function fetchAllPrices() {
+        try {
+            const ids = symbols.map(s => s.id).join(',');
+            const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            return null;
+        }
+    }
+
+    async function updateDashboard() {
+        const prices = await fetchAllPrices();
+        const cryptoGrid = document.getElementById('cryptoGrid');
+        
+        if (!prices || Object.keys(prices).length === 0) {
+            cryptoGrid.innerHTML = '<div style="color:#ff4444; text-align:center; grid-column:1/-1;">⚠️ CRYPTO API OFFLINE - REFRESHING SOON ⚠️</div>';
+            return;
+        }
+        
+        cryptoGrid.innerHTML = '';
+        
+        for (let s of symbols) {
+            const data = prices[s.id];
+            const price = data?.usd || 0;
+            const change24h = data?.usd_24h_change || 0;
+            const changeClass = change24h >= 0 ? 'up' : 'down';
+            const changeSign = change24h >= 0 ? '↑' : '↓';
+            
+            const card = document.createElement('div');
+            card.className = 'crypto-card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="symbol">${s.symbol}</span>
+                    <span class="name">${s.name}</span>
+                </div>
+                <div class="price-section">
+                    <span class="price">$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}</span>
+                    <span class="change ${changeClass}">${changeSign} ${Math.abs(change24h).toFixed(2)}%</span>
+                </div>
+                <div style="font-size:0.7rem; color:#008800; margin-top:8px;">◉ LIVE</div>
+            `;
+            cryptoGrid.appendChild(card);
+        }
+    }
+
+    // Time functions (same as before)
+    function updateTimeAndDate() {
+        const now = new Date();
+        const utcHours = now.getUTCHours().toString().padStart(2, '0');
+        const utcMinutes = now.getUTCMinutes().toString().padStart(2, '0');
+        const utcSeconds = now.getUTCSeconds().toString().padStart(2, '0');
+        document.getElementById('utcTime').textContent = `${utcHours}:${utcMinutes}:${utcSeconds}`;
+        
+        let utc8Hours = (now.getUTCHours() + 8) % 24;
+        document.getElementById('utc8Time').textContent = `${utc8Hours.toString().padStart(2, '0')}:${utcMinutes}:${utcSeconds}`;
+        
+        const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        document.getElementById('localDate').textContent = `${weekdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    async function updatePageCounter() {
+        const pageId = 'matrix_crypto_suren';
+        try {
+            const getResponse = await fetch(`https://api.countapi.xyz/get/${pageId}`);
+            let data = await getResponse.json();
+            if (data.value === undefined) {
+                await fetch(`https://api.countapi.xyz/set/${pageId}?value=1`);
+                document.getElementById('counter').textContent = '1';
+            } else {
+                const updateResponse = await fetch(`https://api.countapi.xyz/update/${pageId}?amount=1`);
+                const updateData = await updateResponse.json();
+                document.getElementById('counter').textContent = updateData.value.toLocaleString();
+            }
+        } catch (error) {
+            document.getElementById('counter').textContent = '42';
+        }
+    }
+
+    // Run everything
+    updateDashboard();
+    updateTimeAndDate();
+    updatePageCounter();
+    setInterval(updateTimeAndDate, 1000);
+    setInterval(updateDashboard, 30000);
+</script>
+</body>
+</html>            z-index: 0;
         }
 
         .container {
