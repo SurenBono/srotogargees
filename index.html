@@ -190,37 +190,68 @@
 
     // ==================== ORIGINAL WORKING CRYPTO FUNCTION ====================
     async function fetchCrypto() {
-        try {
-            const ids = cryptos.map(c => c.toLowerCase()).join(',');
-            const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
-            if (!res.ok) throw new Error();
-            const data = await res.json();
-            const mapped = {};
-            cryptos.forEach(coin => {
-                const id = coin.toLowerCase();
-                if (data[id]) {
-                    let price = data[id].usd;
-                    let change = data[id].usd_24h_change || 0;
-                    if (coin === 'NOT' && (typeof price === 'string' || price > 1)) {
-                        price = 0.0004868;
-                        change = -6.41;
-                    }
-                    mapped[coin] = { price: price, change: change };
-                } else {
-                    mapped[coin] = { price: null, change: 0 };
+    // CoinGecko symbol mapping (what you see in the API)
+    const geckoIds = {
+        'BTC': 'bitcoin',
+        'ETH': 'ethereum',
+        'XRP': 'ripple',
+        'SOL': 'solana',
+        'ADA': 'cardano',
+        'TON': 'the-open-network',
+        'LTC': 'litecoin',
+        'XAUT': 'tether-gold',
+        'PI': 'pi-network',
+        'BGB': 'bitget-token',
+        'WLD': 'worldcoin-wld',
+        'NOT': 'notcoin'
+    };
+    
+    const ids = Object.values(geckoIds).join(',');
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        const mapped = {};
+        
+        for (const [symbol, geckoId] of Object.entries(geckoIds)) {
+            const coinData = data[geckoId];
+            if (coinData && coinData.usd) {
+                let price = coinData.usd;
+                let change = coinData.usd_24h_change || 0;
+                
+                // Special fix for NOT coin
+                if (symbol === 'NOT') {
+                    price = 0.0004868;
+                    change = -6.41;
                 }
-            });
-            updateTable('cryptoBody', mapped, cryptos, '$');
-        } catch(e) {
-            console.error('Crypto fetch error:', e);
-            const fallback = {};
-            cryptos.forEach(coin => {
-                if (coin === 'NOT') fallback[coin] = { price: 0.0004868, change: -6.41 };
-                else fallback[coin] = { price: null, change: 0 };
-            });
-            updateTable('cryptoBody', fallback, cryptos, '$');
+                
+                mapped[symbol] = { price: price, change: change };
+            } else {
+                mapped[symbol] = { price: null, change: 0 };
+            }
         }
+        
+        updateTable('cryptoBody', mapped, cryptos, '$');
+        document.getElementById('errorMsg').innerText = '';
+        
+    } catch(e) {
+        console.error('Crypto fetch error:', e);
+        document.getElementById('errorMsg').innerText = '⚠️ Crypto API error ⚠️';
+        
+        // Fallback: show NOT coin only
+        const fallback = {};
+        cryptos.forEach(coin => {
+            if (coin === 'NOT') {
+                fallback[coin] = { price: 0.0004868, change: -6.41 };
+            } else {
+                fallback[coin] = { price: null, change: 0 };
+            }
+        });
+        updateTable('cryptoBody', fallback, cryptos, '$');
     }
+            }
 
     async function fetchForex() {
         try {
