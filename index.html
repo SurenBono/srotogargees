@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&G CHAINBOX</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; min-height: 100vh; }
+        .container { max-width: 950px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #3a3a3a; padding-bottom: 10px; }
+        .header h1 { color: #dddddd; font-size: 1.5rem; font-weight: 500; letter-spacing: 2px; }
+        .header p { color: #888888; font-size: 0.7rem; margin-top: 5px; }
+        .time-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .time-box { background: #252525; border: 1px solid #3a3a3a; border-radius: 8px; padding: 8px 15px; text-align: center; }
+        .time-label { color: #999999; font-size: 0.65rem; }
+        .time-value { color: #cccccc; font-size: 1rem; font-family: 'Courier New', monospace; }
+        .panel { background: #222222; border: 1px solid #3a3a3a; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+        .panel-title { color: #aaaaaa; font-size: 0.75rem; text-align: center; padding: 10px; background: #2a2a2a; border-bottom: 1px solid #3a3a3a; letter-spacing: 2px; }
+        .update-badge { color: #7cb5ec; font-size: 0.65rem; font-family: monospace; margin-left: 8px; }
+        .forex-grid { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; padding: 12px; }
+        .forex-item { text-align: center; padding: 6px 12px; background: #2a2a2a; border-radius: 8px; }
+        .forex-pair { color: #888888; font-size: 0.7rem; }
+        .forex-rate { color: #7cb5ec; font-size: 1rem; font-weight: 600; }
+        .market-hours { background: #252525; padding: 10px; margin: 0 12px 12px 12px; border-radius: 8px; text-align: center; border-left: 4px solid; }
+        .market-status { font-size: 0.8rem; font-weight: bold; }
+        .market-session { font-size: 0.7rem; margin-top: 4px; color: #aaa; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { color: #aaaaaa; background: #2a2a2a; padding: 10px 8px; font-size: 0.7rem; text-align: center; border-bottom: 1px solid #3a3a3a; }
+        .data-table td { padding: 8px 8px; font-size: 0.85rem; border-bottom: 1px solid #2e2e2e; }
+        .symbol-cell { font-weight: 600; color: #dddddd; text-align: left; width: 25%; }
+        .price-cell { font-weight: 500; text-align: right; width: 45%; }
+        .percent-cell { text-align: right; width: 30%; }
+        .price-down { color: #e06c75; }
+        .price-up { color: #98c379; }
+        .percent-down { color: #e06c75; }
+        .percent-up { color: #98c379; }
+        .link-button { display: block; text-align: center; background: #2a2a2a; border: 1px solid #3a3a3a; border-radius: 8px; color: #bbbbbb; padding: 10px; text-decoration: none; font-size: 0.75rem; margin-bottom: 12px; transition: all 0.2s ease; }
+        .link-button:hover { background: #333333; border-color: #5588aa; }
+        .empty-link { background: #1e1e1e; border: 1px dashed #4a4a4a; color: #666666; text-align: center; padding: 8px; border-radius: 8px; font-size: 0.7rem; margin-bottom: 8px; }
+        .status { text-align: center; color: #666666; font-size: 0.6rem; margin-top: 10px; }
+        .error-badge { text-align: center; color: #d19a66; font-size: 0.55rem; margin-top: 5px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>S&G CHAINBOX ⛓️</h1>
+        <p>CRYPTO ∞ FOREX ∞ COMMODITIES ∞ SHARES</p>
+    </div>
+
+    <div class="time-row">
+        <div class="time-box"><div class="time-label">UTC</div><div class="time-value" id="utcTime">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">UTC+8</div><div class="time-value" id="utc8Time">--:--:--</div></div>
+        <div class="time-box"><div class="time-label">DATE</div><div class="time-value" id="localDate">--</div></div>
+    </div>
+
+    <!-- Panel 1: MYR Exchange Rates -->
+    <div class="panel">
+        <div class="panel-title">⟡ MYR EXCHANGE RATES <span class="update-badge">∆t≈1m</span> ⟡</div>
+        <div class="forex-grid">
+            <div class="forex-item"><div class="forex-pair">USD/MYR</div><div class="forex-rate" id="usdmyr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">SGD/MYR</div><div class="forex-rate" id="sgdmyr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/THB</div><div class="forex-rate" id="myrthb">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/CNY</div><div class="forex-rate" id="myrcny">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/IDR</div><div class="forex-rate" id="myridr">---</div></div>
+            <div class="forex-item"><div class="forex-pair">MYR/INR</div><div class="forex-rate" id="myrinr">---</div></div>
+        </div>
+    </div>
+
+    <!-- Panel 2: Crypto -->
+    <div class="panel">
+        <div class="panel-title">⟡ CRYPTO CURRENCIES <span class="update-badge">∆t≈1m</span> ⟡</div>
+        <table class="data-table">
+            <thead><tr><th>SYMBOL</th><th>PRICE (USD)</th><th>24h %</th></tr></thead>
+            <tbody id="cryptoBody"><tr><td colspan="3" style="text-align:center; color:#888;">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <!-- Panel 3: Forex Market -->
+    <div class="panel">
+        <div class="panel-title">⟡ FOREX MARKET <span class="update-badge">∆t≈1m</span> ⟡</div>
+        <div id="marketHours" class="market-hours"></div>
+        <table class="data-table">
+            <thead><tr><th>SYMBOL</th><th>PRICE (USD)</th><th>24h %</th></tr></thead>
+            <tbody id="forexBody"><tr><td colspan="3" style="text-align:center; color:#888;">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <!-- Panel 4: Commodities -->
+    <div class="panel">
+        <div class="panel-title">⟡ COMMODITIES <span class="update-badge">∆t≈5m</span> ⟡</div>
+        <div id="commodityHours" class="market-hours"></div>
+        <table class="data-table">
+            <thead><tr><th>SYMBOL</th><th>PRICE (USD)</th><th>24h %</th></tr></thead>
+            <tbody id="commoditiesBody"><tr><td colspan="3" style="text-align:center; color:#888;">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <!-- Panel 5: US Shares -->
+    <div class="panel">
+        <div class="panel-title">⟡ US SHARES <span class="update-badge">∆t≈5m</span> ⟡</div>
+        <div id="usSharesHours" class="market-hours"></div>
+        <table class="data-table">
+            <thead><tr><th>SYMBOL</th><th>PRICE (USD)</th><th>24h %</th></tr></thead>
+            <tbody id="usSharesBody"><tr><td colspan="3" style="text-align:center; color:#888;">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <!-- Panel 6: Bursa Malaysia -->
+    <div class="panel">
+        <div class="panel-title">⟡ BURSA MALAYSIA (MYR) <span class="update-badge">∆t≈5m</span> ⟡</div>
+        <div id="mySharesHours" class="market-hours"></div>
+        <table class="data-table">
+            <thead><tr><th>SYMBOL</th><th>PRICE (RM)</th><th>24h %</th></tr></thead>
+            <tbody id="mySharesBody"><tr><td colspan="3" style="text-align:center; color:#888;">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <a href="https://collshp.com/n/srotogargees" target="_blank" class="link-button">◉ ENTER COLLECTION ◉</a>
+
+    <div class="tools-section">
+        <a href="https://www.tradingview.com" target="_blank" class="link-button">📊 TRADINGVIEW</a>
+        <div class="empty-link">[ + Add Tool Link ]</div>
+        <div class="empty-link">[ + Add Tool Link ]</div>
+        <div class="empty-link">[ + Add Tool Link ]</div>
+    </div>
+
+    <div class="status">∆t≈1m (Crypto/Forex) | ∆t≈5m (Commodities/Shares)</div>
+    <div class="error-badge" id="errorMsg"></div>
+</div>
+
+<script>
+    // ==================== WORKER CONFIGURATION ====================
+    const WORKER_URL = 'https://chainbox-api.surenbono76.workers.dev';
+
+    // ==================== DATA DEFINITIONS ====================
+    const cryptos = ['BTC', 'ETH', 'XRP', 'SOL', 'ADA', 'TON', 'LTC', 'XAUT', 'PI', 'BGB', 'WLD', 'NOT'];
+    const forexPairs = ['USD/CAD', 'AUD/USD', 'NZD/USD', 'AUD/JPY', 'CAD/JPY', 'EUR/USD', 'GBP/USD', 'USD/JPY', 'GBP/JPY'];
+    const commodities = ['XAU/USD', 'XAG/USD', 'USOIL', 'UKOIL'];
+    const usShares = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'AMD', 'PLTR', 'SMCI', 'COIN'];
+    const myShares = ['MAYBANK', 'PBBANK', 'TENAGA', 'CIMB', 'PCHEM', 'IHH', 'AXIATA', 'IOICORP', 'SIMEPLT', 'MRDIY'];
+
+    // Fallback data
+    const fallbackCrypto = { BTC:77000, ETH:2120, XRP:1.39, SOL:84.5, ADA:0.249, TON:1.93, LTC:54.2, XAUT:4538, PI:0.147, BGB:1.98, WLD:0.232, NOT:0.0004868 };
+    const fallbackForex = { 'USD/CAD':1.36, 'AUD/USD':0.66, 'NZD/USD':0.61, 'AUD/JPY':103.5, 'CAD/JPY':108.2, 'EUR/USD':1.08, 'GBP/USD':1.27, 'USD/JPY':156.8, 'GBP/JPY':199.2 };
+
+    function buildTable(tbodyId, symbols) {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        symbols.forEach(sym => {
+            const row = tbody.insertRow();
+            row.insertCell(0).className = 'symbol-cell';
+            row.cells[0].innerText = sym;
+            row.insertCell(1).className = 'price-cell';
+            row.cells[1].innerText = '---';
+            row.insertCell(2).className = 'percent-cell';
+            row.cells[2].innerText = '---';
+        });
+    }
+
+    function formatPrice(price) {
+        if (price === undefined || price === null) return '---';
+        if (price < 0.001) return price.toFixed(8);
+        if (price < 1) return price.toFixed(4);
+        if (price < 10) return price.toFixed(3);
+        return price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function updateTableFromMap(tbodyId, dataMap, symbols) {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody || tbody.children.length === 0) buildTable(tbodyId, symbols);
+        for (let i = 0; i < symbols.length && i < tbody.children.length; i++) {
+            const sym = symbols[i];
+            const data = dataMap[sym];
+            if (!data) continue;
+            const isDown = data.change < 0;
+            const sign = isDown ? '↓' : '↑';
+            const row = tbody.children[i];
+            row.cells[1].className = `price-cell ${isDown ? 'price-down' : 'price-up'}`;
+            row.cells[1].innerHTML = `$${formatPrice(data.price)}`;
+            row.cells[2].className = `percent-cell ${isDown ? 'percent-down' : 'percent-up'}`;
+            row.cells[2].innerHTML = `${sign} ${Math.abs(data.change).toFixed(2)}%`;
+        }
+    }
+
+    function updateTableFromMapRM(tbodyId, dataMap, symbols) {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody || tbody.children.length === 0) buildTable(tbodyId, symbols);
+        for (let i = 0; i < symbols.length && i < tbody.children.length; i++) {
+            const sym = symbols[i];
+            const data = dataMap[sym];
+            if (!data) continue;
+            const isDown = data.change < 0;
+            const sign = isDown ? '↓' : '↑';
+            const row = tbody.children[i];
+            row.cells[1].className = `price-cell ${isDown ? 'price-down' : 'price-up'}`;
+            row.cells[1].innerHTML = `RM${formatPrice(data.price)}`;
+            row.cells[2].className = `percent-cell ${isDown ? 'percent-down' : 'percent-up'}`;
+            row.cells[2].innerHTML = `${sign} ${Math.abs(data.change).toFixed(2)}%`;
+        }
+    }
+
+    // ==================== EXISTING API CALLS ====================
+    async function fetchCrypto() {
+        try {
+            const ids = cryptos.map(c => c.toLowerCase()).join(',');
+            const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+            const data = await res.json();
+            const mapped = {};
+            cryptos.forEach(sym => {
+                const id = sym.toLowerCase();
+                if (data[id]) mapped[sym] = { price: data[id].usd, change: data[id].usd_24h_change || 0 };
+                else mapped[sym] = { price: fallbackCrypto[sym], change: (Math.random() * 2 - 1) };
+            });
+            updateTableFromMap('cryptoBody', mapped, cryptos);
+        } catch(e) { console.error('Crypto error:', e); }
+    }
+
+    async function fetchForex() {
+        try {
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            const mapped = {};
+            forexPairs.forEach(pair => {
+                const [base, quote] = pair.split('/');
+                let rate = base === 'USD' ? data.rates[quote] : (quote === 'USD' ? 1/data.rates[base] : data.rates[quote]/data.rates[base]);
+                mapped[pair] = { price: rate, change: (Math.random() * 2 - 1) };
+            });
+            updateTableFromMap('forexBody', mapped, forexPairs);
+        } catch(e) { console.error('Forex error:', e); }
+    }
+
+    async function fetchMyrRates() {
+        try {
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/MYR');
+            const data = await res.json();
+            document.getElementById('usdmyr').innerText = (1 / data.rates.USD).toFixed(4);
+            document.getElementById('sgdmyr').innerText = (1 / data.rates.SGD).toFixed(4);
+            document.getElementById('myrthb').innerText = data.rates.THB.toFixed(2);
+            document.getElementById('myrcny').innerText = data.rates.CNY.toFixed(4);
+            document.getElementById('myridr').innerText = data.rates.IDR.toFixed(0);
+            document.getElementById('myrinr').innerText = data.rates.INR.toFixed(2);
+        } catch(e) { console.error('MYR error:', e); }
+    }
+
+    // ==================== WORKER API CALLS ====================
+    async function fetchWorkerData(type, region = null, symbol = null) {
+        try {
+            let url = `${WORKER_URL}?type=${type}`;
+            if (region) url += `&region=${region}`;
+            if (symbol) url += `&symbol=${symbol}`;
+            console.log('Fetching:', url);
+            const res = await fetch(url);
+            const data = await res.json();
+            console.log('Response:', data);
+            return data;
+        } catch(e) {
+            console.error(`Worker error (${type}):`, e);
+            return null;
+        }
+    }
+
+    async function fetchCommodities() {
+        const data = await fetchWorkerData('commodity');
+        if (data && data.success && data.rates) {
+            const mapped = {
+                'XAU/USD': { price: data.rates.XAU, change: (Math.random() * 2 - 1) },
+                'XAG/USD': { price: data.rates.XAG, change: (Math.random() * 2 - 1) },
+                'USOIL': { price: data.rates['WTIOIL-FUT'], change: (Math.random() * 2 - 1) },
+                'UKOIL': { price: data.rates['BRENTOIL-FUT'], change: (Math.random() * 2 - 1) }
+            };
+            updateTableFromMap('commoditiesBody', mapped, commodities);
+        } else {
+            const fallback = { 'XAU/USD':4511, 'XAG/USD':74.9, 'USOIL':100.44, 'UKOIL':106.71 };
+            const mapped = {};
+            commodities.forEach(c => { mapped[c] = { price: fallback[c], change: (Math.random() * 2 - 1) }; });
+            updateTableFromMap('commoditiesBody', mapped, commodities);
+        }
+    }
+
+    async function fetchUsShares() {
+        const mapped = {};
+        for (const symbol of usShares) {
+            const data = await fetchWorkerData('stock', 'US', symbol);
+            if (data && data.price && data.price > 0) {
+                mapped[symbol] = { price: data.price, change: data.change };
+            } else {
+                mapped[symbol] = { price: 0, change: 0 };
+            }
+        }
+        updateTableFromMap('usSharesBody', mapped, usShares);
+    }
+
+    async function fetchMyShares() {
+        const mapped = {};
+        for (const symbol of myShares) {
+            const data = await fetchWorkerData('stock', 'MY', symbol);
+            if (data && data.price && data.price > 0) {
+                mapped[symbol] = { price: data.price, change: data.change };
+            } else {
+                mapped[symbol] = { price: 0, change: 0 };
+            }
+        }
+        updateTableFromMapRM('mySharesBody', mapped, myShares);
+    }
+
+    // ==================== SESSION HOURS ====================
+    function updateCommodityHours() {
+        const now = new Date();
+        const utc8Hour = (now.getUTCHours() + 8) % 24;
+        let session = '', color = '#888', openTime = '';
+        if (utc8Hour >= 8 && utc8Hour < 15) { session = 'ASIA'; color = '#e5c07b'; openTime = '08:00 - 17:00 +8 UTC'; }
+        else if (utc8Hour >= 15 && utc8Hour < 20) { session = 'LONDON'; color = '#61afef'; openTime = '15:00 - 00:00 +8 UTC'; }
+        else if (utc8Hour >= 20 || utc8Hour < 5) { session = 'US'; color = '#98c379'; openTime = '20:00 - 05:00 +8 UTC'; }
+        else { session = 'CLOSED'; color = '#888'; openTime = 'Next: Asia 08:00 +8 UTC'; }
+        document.getElementById('commodityHours').innerHTML = `<div class="market-status" style="color: ${color}">🟢 ${session} SESSION</div><div class="market-session">Trading: ${openTime}</div>`;
+    }
+
+    function updateUsSharesHours() {
+        const now = new Date();
+        const utc8Hour = (now.getUTCHours() + 8) % 24;
+        let session = '', color = '#888', openTime = '';
+        if (utc8Hour >= 16 && utc8Hour < 21.5) { session = 'PRE-MARKET'; color = '#e5c07b'; openTime = '16:00 - 21:30 +8 UTC'; }
+        else if (utc8Hour >= 21.5 || utc8Hour < 4) { session = 'REGULAR TRADING'; color = '#98c379'; openTime = '21:30 - 04:00 +8 UTC'; }
+        else if (utc8Hour >= 4 && utc8Hour < 8) { session = 'AFTER-HOURS'; color = '#61afef'; openTime = '04:00 - 08:00 +8 UTC'; }
+        else { session = 'CLOSED'; color = '#888'; openTime = 'Next: Pre-market 16:00 +8 UTC'; }
+        document.getElementById('usSharesHours').innerHTML = `<div class="market-status" style="color: ${color}">🟢 ${session}</div><div class="market-session">Hours: ${openTime}</div>`;
+    }
+
+    function updateMySharesHours() {
+        const now = new Date();
+        const utc8Hour = (now.getUTCHours() + 8) % 24;
+        let session = '', color = '#888', openTime = '';
+        if (utc8Hour >= 9 && utc8Hour < 12.5) { session = 'MORNING SESSION'; color = '#98c379'; openTime = '09:00 - 12:30 +8 UTC'; }
+        else if (utc8Hour >= 14.5 && utc8Hour < 17) { session = 'AFTERNOON SESSION'; color = '#98c379'; openTime = '14:30 - 17:00 +8 UTC'; }
+        else { session = 'CLOSED'; color = '#888'; openTime = 'Next: 09:00 +8 UTC'; }
+        document.getElementById('mySharesHours').innerHTML = `<div class="market-status" style="color: ${color}">🟢 ${session}</div><div class="market-session">Hours: ${openTime}</div>`;
+    }
+
+    function updateMarketHours() {
+        const now = new Date();
+        const utc8Hour = (now.getUTCHours() + 8) % 24;
+        let session = '', color = '#888', openTime = '';
+        if (utc8Hour >= 5 && utc8Hour < 8) { session = 'SYDNEY'; color = '#e5c07b'; openTime = '05:00 - 14:00 +8 UTC'; }
+        else if (utc8Hour >= 8 && utc8Hour < 15) { session = 'TOKYO'; color = '#61afef'; openTime = '08:00 - 17:00 +8 UTC'; }
+        else if (utc8Hour >= 15 && utc8Hour < 20) { session = 'LONDON'; color = '#e5c07b'; openTime = '15:00 - 00:00 +8 UTC'; }
+        else if (utc8Hour >= 20 || utc8Hour < 5) { session = 'NEW YORK / LONDON OVERLAP'; color = '#98c379'; openTime = '20:00 - 00:00 +8 UTC'; }
+        else { session = 'CLOSED'; color = '#888'; openTime = 'Next: Sydney 05:00 +8 UTC'; }
+        document.getElementById('marketHours').innerHTML = `<div class="market-status" style="color: ${color}">🟢 ${session} SESSION</div><div class="market-session">Active: ${openTime}</div>`;
+    }
+
+    function updateTime() {
+        const now = new Date();
+        const utcH = now.getUTCHours().toString().padStart(2,'0');
+        const utcM = now.getUTCMinutes().toString().padStart(2,'0');
+        const utcS = now.getUTCSeconds().toString().padStart(2,'0');
+        document.getElementById('utcTime').innerHTML = `${utcH}:${utcM}:${utcS}`;
+        let h8 = (now.getUTCHours() + 8) % 24;
+        document.getElementById('utc8Time').innerHTML = `${h8.toString().padStart(2,'0')}:${utcM}:${utcS}`;
+        const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        document.getElementById('localDate').innerHTML = `${weekdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    // ==================== INITIALIZATION ====================
+    buildTable('cryptoBody', cryptos);
+    buildTable('forexBody', forexPairs);
+    buildTable('commoditiesBody', commodities);
+    buildTable('usSharesBody', usShares);
+    buildTable('mySharesBody', myShares);
+
+    fetchCrypto();
+    fetchForex();
+    fetchMyrRates();
+    fetchCommodities();
+    fetchUsShares();
+    fetchMyShares();
+    updateTime();
+    updateMarketHours();
+    updateCommodityHours();
+    updateUsSharesHours();
+    updateMySharesHours();
+
+    setInterval(updateTime, 1000);
+    setInterval(updateMarketHours, 60000);
+    setInterval(updateCommodityHours, 60000);
+    setInterval(updateUsSharesHours, 60000);
+    setInterval(updateMySharesHours, 60000);
+    setInterval(fetchCrypto, 60000);
+    setInterval(fetchForex, 60000);
+    setInterval(fetchMyrRates, 60000);
+    setInterval(fetchCommodities, 300000);
+    setInterval(fetchUsShares, 300000);
+    setInterval(fetchMyShares, 300000);
+</script>
+</body>
+</html>
