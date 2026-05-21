@@ -2,7 +2,7 @@
 
 ... just global & local combo economy quick infos
 
-https://surenbono.github.io/srotogargees/
+https://surenbono.github.io/srotogargees
 
 
 tools:-
