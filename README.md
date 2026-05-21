@@ -1,10 +1,9 @@
 
 ... just global & local combo economy quick infos
 
-https://surenbono.github.io/srotogargees
+A.i Assistant: DeepSeek,CloudFlare
 
-
-tools:-
+tools:- 
 
  API 1 
  commoditypriceapi.com
@@ -14,6 +13,8 @@ tools:-
 
 API key Secrets saved in Cloudflare workers when the browser calls for an update..
 
+
+https://surenbono.github.io/srotogargees
 srotogargees c/o suren 
 21-5-26
  
