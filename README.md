@@ -1,7 +1,7 @@
 
-... just global & local combo economy quick infos
+... just personal use on combo global & local financials quick infos...
 
-A.i Assistant: DeepSeek,CloudFlare
+A.i Assistants : DeepSeek,CloudFlare A.i
 
 tools:- 
 
