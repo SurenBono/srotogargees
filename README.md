@@ -1,4 +1,3 @@
-# srotogargees c/o suren 
 
 ... just global & local combo economy quick infos
 
@@ -15,6 +14,6 @@ tools:-
 
 API key Secrets saved in Cloudflare workers when the browser calls for an update..
 
-
+srotogargees c/o suren 
 21-5-26
  
