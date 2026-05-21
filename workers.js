@@ -1,4 +1,3 @@
-
 export default {
   async fetch(request, env) {
     // Handle CORS preflight
@@ -77,7 +76,7 @@ export default {
     }
   },
 };
-```
+
 
 //**Note:** This script references two secret environment variables
 //— `COMMODITY_API_KEY` and `ITICK_TOKEN` 
