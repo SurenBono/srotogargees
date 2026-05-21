@@ -4,11 +4,14 @@
 
 https://surenbono.github.io/srotogargees/
 
-https://collshp.com/n/srotogargees 
 
 tools:-
- API 1 - https://commoditypriceapi.com/
- API 2 - api0.itick.org
+
+ API 1 
+ commoditypriceapi.com/
+ 
+ API 2 
+ itick.org
 
 API key Secrets saved in Cloudflare workers when the browser calls for an update..
  
