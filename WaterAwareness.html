@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, print-scale: 100%">
+    <title>Ideal Drinking Water | Unified Dark Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* UNIFIED SINGLE-COLOR BACKGROUND — everything blends seamlessly */
+        body {
+            background: #12161c;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+            color: #e8edf5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #12161c;   /* exactly same as body → seamless */
+            padding: 1.2rem 1.2rem;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+            color: #d6eaff;
+            border-left: 4px solid #3e9f6e;
+            padding-left: 1rem;
+            background: none;
+        }
+
+        .sub {
+            color: #90a3bc;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #25303e;
+            padding-bottom: 0.75rem;
+        }
+
+        /* TABLES: completely unified background — no alternation, no visible borders unless needed */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.8rem 0;
+            font-size: 0.85rem;
+            background: #12161c;      /* same as main bg */
+            border-radius: 0;
+        }
+
+        th {
+            background-color: #1b2129;
+            color: #dce5f5;
+            font-weight: 600;
+            padding: 12px 8px;
+            border: none;
+            border-bottom: 1px solid #2c3848;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #212835;
+            padding: 10px 8px;
+            vertical-align: top;
+            background-color: #12161c;   /* seamless with body */
+            color: #d3deed;
+        }
+
+        /* subtle row hover only for orientation – but background still unified */
+        tr:hover td {
+            background-color: #1a212b;
+        }
+
+        .section-title {
+            background-color: #1a212a;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 12px;
+            border: none;
+            border-bottom: 2px solid #3e9f6e;
+            color: #ecf5ff;
+        }
+
+        /* no extra background for note - same color family */
+        .note {
+            background: #12161c;
+            font-size: 0.75rem;
+            color: #bacde2;
+            padding: 14px 12px;
+            margin-top: 12px;
+            border-left: 3px solid #3e9f6e;
+            border-radius: 0px;
+        }
+
+        .footer-badge {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6a7c94;
+            border-top: 1px solid #25303e;
+            padding-top: 1.5rem;
+        }
+
+        /* Earth table remains visually consistent (exactly same background) */
+        .highlight-earth td, .highlight-earth th {
+            background-color: #12161c;
+        }
+
+        .highlight-earth tr:hover td {
+            background-color: #1a212b;
+        }
+
+        /* keep all text smooth */
+        strong, b {
+            color: #f0f6ff;
+        }
+
+        /* print adaptation - keeps dark but minimal */
+        @media print {
+            body, .container, td, th, .note, .highlight-earth td {
+                background: #0e1117 !important;
+                color: #eee !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            tr:hover td {
+                background-color: #1a212b !important;
+            }
+        }
+
+        /* special alignment helper: keeps table rows pleasant */
+        td:first-child, th:first-child {
+            padding-left: 10px;
+        }
+        td:last-child, th:last-child {
+            padding-right: 10px;
+        }
+
+        /* remove all box shadows, all cards — pure flat uniform design */
+        .container, table, .note {
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🌊 Ideal drinking water · 1 liter global reference</h1>
+    <div class="sub">Unified dark interface · WHO-based mineral targets · safety thresholds & global water insight</div>
+
+    <!-- TABLE 1 : COMPLETE COMPOSITION (aligned, no border distractions) -->
+    <table>
+        <tr class="section-title">
+            <th colspan="4">📋 1. Complete composition – essential minerals, trace elements, contaminants & radioactivity</th>
+        </tr>
+        <tr>
+            <th>Component / Parameter</th>
+            <th>Ideal value (per liter)</th>
+            <th>% of 1L (approx)</th>
+            <th>Health risk if exceeded</th>
+        </tr>
+        <tr><td>Pure H₂O</td><td>~999,600 mg</td><td>~99.96%</td><td>None</td></tr>
+        <tr><td>Calcium (Ca)</td><td>40–80 mg</td><td>0.004–0.008%</td><td>Kidney stones (>200 mg/L)</td></tr>
+        <tr><td>Magnesium (Mg)</td><td>20–30 mg</td><td>0.002–0.003%</td><td>Diarrhea (>100 mg/L)</td></tr>
+        <tr><td>Sodium (Na)</td><td>10–20 mg</td><td>0.001–0.002%</td><td>High blood pressure (>200 mg/L)</td></tr>
+        <tr><td>Potassium (K)</td><td>2–5 mg</td><td>0.0002–0.0005%</td><td>Heart arrhythmia risk</td></tr>
+        <tr><td>Bicarbonate (HCO₃⁻)</td><td>50–200 mg</td><td>0.005–0.02%</td><td>None significant</td></tr>
+        <tr><td>Sulfate (SO₄²⁻)</td><td>10–50 mg</td><td>0.001–0.005%</td><td>Diarrhea, dehydration (>500 mg/L)</td></tr>
+        <tr><td>Chloride (Cl⁻)</td><td>10–50 mg</td><td>0.001–0.005%</td><td>Salty taste, hypertension (>250 mg/L)</td></tr>
+        <tr><td>Fluoride (F⁻)</td><td>0.5–1.0 mg</td><td>0.00005–0.0001%</td><td>Dental fluorosis (>1.5 mg/L), skeletal fluorosis (>4 mg/L)</td></tr>
+        <tr><td>Silica (SiO₂)</td><td>10–30 mg</td><td>0.001–0.003%</td><td>None known (beneficial for bones)</td></tr>
+        <tr><td>Zinc (Zn)</td><td>0.5–2 mg</td><td>0.00005–0.0002%</td><td>Stomach cramps, nausea (>5 mg/L)</td></tr>
+        <tr><td>Copper (Cu)</td><td>0.1–1 mg</td><td>0.00001–0.0001%</td><td>Nausea, liver damage (>2 mg/L)</td></tr>
+        <tr><td>Selenium (Se)</td><td>0.01–0.05 mg</td><td>0.000001–0.000005%</td><td>Toxic, hair/nail loss (>0.1 mg/L)</td></tr>
+        <tr><td>Manganese (Mn)</td><td>0.05–0.1 mg</td><td>0.000005–0.00001%</td><td>Neurological effects (>0.5 mg/L)</td></tr>
+        <tr><td>Iodine (I)</td><td>0.01–0.05 mg</td><td>0.000001–0.000005%</td><td>Thyroid dysfunction (>0.5 mg/L)</td></tr>
+        <tr><td>Iron (Fe)</td><td>0.1–0.3 mg</td><td>0.00001–0.00003%</td><td>Metallic taste, bacterial growth (>0.3 mg/L)</td></tr>
+        <tr><td>Boron (B)</td><td>0.1–0.5 mg</td><td>0.00001–0.00005%</td><td>Reproductive effects, nausea (>5 mg/L)</td></tr>
+        <tr><td>Lithium (Li)</td><td>0.01–0.05 mg</td><td>0.000001–0.000005%</td><td>Kidney damage, neurological (>2 mg/L)</td></tr>
+        <tr><td>Dissolved Oxygen (O₂)</td><td>5–8 mg</td><td>0.0005–0.0008%</td><td>None (improves taste)</td></tr>
+        <tr><td>Total Dissolved Solids (TDS)</td><td>200–400 mg</td><td>0.02–0.04%</td><td>Poor taste, scaling (>900 mg/L)</td></tr>
+        <tr><td>pH level</td><td>7.0–8.0</td><td>—</td><td>Corrosion if <6.5, bitter/scale if >8.5</td></tr>
+        <tr><td>Free Chlorine (if piped)</td><td>0.2–0.5 mg</td><td>0.00002–0.00005%</td><td>Unpleasant taste, possible organ damage (>0.8 mg/L)</td></tr>
+        <tr><td>Temperature</td><td>10–15°C</td><td>—</td><td>Warm water: bacterial growth, poor taste</td></tr>
+        <tr><td>Turbidity</td><td>&lt;1 NTU</td><td>—</td><td>Visual unappealing, may harbor pathogens</td></tr>
+        <tr><td>Lead (Pb)</td><td>&lt;0.01 mg</td><td>&lt;0.000001%</td><td>Brain damage, developmental issues</td></tr>
+        <tr><td>Arsenic (As)</td><td>&lt;0.01 mg</td><td>&lt;0.000001%</td><td>Cancer, skin lesions</td></tr>
+        <tr><td>Mercury (Hg)</td><td>&lt;0.006 mg</td><td>&lt;0.0000006%</td><td>Kidney, neurological damage</td></tr>
+        <tr><td>Cadmium (Cd)</td><td>&lt;0.003 mg</td><td>&lt;0.0000003%</td><td>Kidney damage, bone weakening</td></tr>
+        <tr><td>Chromium (Cr⁶⁺)</td><td>&lt;0.05 mg</td><td>&lt;0.000005%</td><td>Cancer, skin irritation</td></tr>
+        <tr><td>Nitrate (NO₃⁻)</td><td>&lt;50 mg</td><td>&lt;0.005%</td><td>Blue baby syndrome (infants)</td></tr>
+        <tr><td>Microplastics</td><td>&lt;1 particle</td><td>~0%</td><td>Unknown long-term inflammation</td></tr>
+        <tr><td>E. coli / Coliforms</td><td>0 CFU/100mL</td><td>0%</td><td>Gastrointestinal disease, death</td></tr>
+        <tr><td>Pesticides (total)</td><td>&lt;0.001 mg each</td><td>&lt;0.0000001%</td><td>Endocrine disruption, cancer</td></tr>
+        <tr><td>PFAS (forever chemicals)</td><td>&lt;0.00002 mg</td><td>&lt;0.000000002%</td><td>Cancer, immune suppression</td></tr>
+        <tr><td>BPA / Phthalates</td><td>As low as possible</td><td>~0%</td><td>Hormone disruption</td></tr>
+        <tr><td>Gross alpha radioactivity</td><td>&lt;0.5 Bq/L</td><td>—</td><td>Cancer (bone, liver)</td></tr>
+        <tr><td>Gross beta radioactivity</td><td>&lt;1.0 Bq/L</td><td>—</td><td>Bone cancer, leukemia</td></tr>
+        <tr><td>Radon (Rn)</td><td>&lt;10 Bq/L</td><td>—</td><td>Lung cancer (from water-air release)</td></tr>
+        <tr><td>Uranium (U)</td><td>&lt;0.03 mg</td><td>&lt;0.000003%</td><td>Kidney damage, cancer</td></tr>
+        <tr><td>Radium (Ra-226/228)</td><td>&lt;0.5 Bq/L combined</td><td>—</td><td>Bone cancer, leukemia</td></tr>
+        <tr><td>Tritium (³H)</td><td>&lt;10 Bq/L</td><td>—</td><td>Low cumulative risk</td></tr>
+        <tr><td>Cesium-137 / Strontium-90</td><td>&lt;1 Bq/L</td><td>—</td><td>Cancer, leukemia</td></tr>
+        <tr><td>Heavy Water (D₂O)</td><td>~0.015% (150 mg/L natural)</td><td>0.015%</td><td>&gt;1%: metabolic slowing; &gt;25%: fatal</td></tr>
+    </table>
+
+    <!-- TABLE 2 : SOURCE COMPARISON (unified background) -->
+    <table>
+        <tr class="section-title">
+            <th colspan="5">💧 2. Source comparison: risks & remineralization necessity</th>
+        </tr>
+        <tr><th>Source type</th><th>Microbial risk</th><th>Chemical risk</th><th>Radioactive risk</th><th>Needs remineralization?</th></tr>
+        <tr><td><strong>Spring water</strong></td><td>Low</td><td>Low</td><td>Very low</td><td>No</td></tr>
+        <tr><td><strong>Deep well water</strong></td><td>Low</td><td>Low–Medium</td><td>Low–Medium (radon/uranium)</td><td>No</td></tr>
+        <tr><td><strong>River water</strong></td><td>Medium–High</td><td>Medium</td><td>Very low</td><td>Possibly</td></tr>
+        <tr><td><strong>Rain / Air condensation</strong></td><td>Low–Medium</td><td>Low–Medium</td><td>Very low</td><td>✅ Yes</td></tr>
+        <tr><td><strong>Desalination (RO)</strong></td><td>Very low</td><td>Very low</td><td>Very low (RO removes)</td><td>✅ Yes</td></tr>
+        <tr><td><strong>Sewage recycled (potable reuse)</strong></td><td>Very low</td><td>Very low</td><td>Very low</td><td>✅ Yes</td></tr>
+    </table>
+
+    <!-- TABLE 3 : GLOBAL COST USD / kWh -->
+    <table>
+        <tr class="section-title"><th colspan="3">💰 3. Average global production cost per liter of ideal water</th></tr>
+        <tr><th>Cost Type</th><th>Value per Liter</th><th>Notes</th></tr>
+        <tr><td>USD (municipal tap water, developed country)</td><td>$0.001 – $0.005</td><td>Treated, piped to home</td></tr>
+        <tr><td>USD (bottled water, global average)</td><td>$0.50 – $2.00</td><td>Includes plastic, transport, profit</td></tr>
+        <tr><td>USD (desalinated + remineralization)</td><td>$0.20 – $0.70</td><td>High energy cost</td></tr>
+        <tr><td>USD (ideal remineralized treated water)</td><td>$0.01 – $0.05</td><td>Target cost for global access</td></tr>
+        <tr><td>kWh (tap water treatment & pumping)</td><td>0.001 – 0.003 kWh</td><td>Very low energy</td></tr>
+        <tr><td>kWh (desalination RO + remineralization)</td><td>0.003 – 0.006 kWh</td><td>3–6 kWh per 1000L</td></tr>
+        <tr><td>kWh (bottled water production energy only)</td><td>1.5 – 2.8 kWh</td><td>Plastic bottle energy (excl. transport)</td></tr>
+    </table>
+
+    <!-- TABLE 4 : EARTH'S WATER RESOURCES – fully integrated -->
+    <table>
+        <tr class="section-title"><th colspan="4">🌎 4. Earth’s water resources – total volume, fresh vs. saline & accessible fresh water</th></tr>
+        <tr><th>Water category</th><th>Volume (km³)</th><th>% of total water on Earth</th><th>% of fresh water</th></tr>
+        <tr><td><strong>Total water on Earth</strong></td><td><strong>~1.386 billion km³</strong></td><td>100%</td><td>—</td></tr>
+        <tr><td>Saline water (oceans & saline groundwater)</td><td>~1.338 billion km³</td><td>~96.5%</td><td>—</td></tr>
+        <tr><td><strong>Fresh water (total)</strong></td><td><strong>~35 million km³</strong></td><td><strong>~2.5%</strong></td><td>100% of freshwater</td></tr>
+        <tr><td style="padding-left: 20px;">▸ Glaciers & permanent ice</td><td>~24.4 million km³</td><td>~1.76% of total water</td><td>~68.7% of fresh water</td></tr>
+        <tr><td style="padding-left: 20px;">▸ Groundwater (fresh & brackish)</td><td>~10.5 million km³</td><td>~0.76% of total water</td><td>~30.1% of fresh water</td></tr>
+        <tr><td style="padding-left: 30px;">• Accessible fresh groundwater</td><td>~4.2 million km³</td><td>~0.3% of total water</td><td>~12% of fresh water</td></tr>
+        <tr><td style="padding-left: 20px;">▸ Lakes, rivers, soil moisture</td><td>~0.2 million km³</td><td>~0.014% of total water</td><td>~0.3% of fresh water</td></tr>
+        <tr><td style="padding-left: 30px;">• Rivers & lakes (liquid fresh)</td><td>~0.09 million km³</td><td>~0.0065% of total water</td><td>~0.26% of fresh water</td></tr>
+        <tr><td style="padding-left: 20px;">▸ Atmosphere (water vapor)</td><td>~12,900 km³</td><td>~0.0009% of total water</td><td>~0.04% of fresh water</td></tr>
+        <tr><td style="padding-left: 20px;">▸ Biological / living organisms</td><td>~1,120 km³</td><td>~0.00008%</td><td>~0.003% of fresh water</td></tr>
+        <tr><td colspan="4" style="background:#12161c; font-size:0.8rem; color:#b8d0f0; border-top:1px solid #2c3848;">
+            🔍 <strong>Key insight:</strong> Only ~2.5% of Earth's water is fresh, and of that fresh water, <strong>~68.7% is locked in glaciers</strong> and <strong>~30% is groundwater</strong>. 
+            <strong>Less than 0.3% of all fresh water</strong> is readily accessible in rivers, lakes, and shallow aquifers for human use. 
+            This makes efficient water management and desalination essential for global drinking water supply.
+        </td></tr>
+     </table>
+
+    <!-- FINAL NOTE (unified background, no box) -->
+    <div class="note">
+        <strong>✅ Final global bottom line (per liter of ideal water):</strong><br>
+        • <strong>Mineral target:</strong> TDS 200–400 mg, Ca 40–80 mg, Mg 20–30 mg, pH 7–8, zero pathogens/toxins, radioactivity within WHO limits.<br>
+        • <strong>Sustainable cost target:</strong> ~$0.02 USD / liter &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Energy target:</strong> ~0.002 kWh / liter (remineralized, treated).<br>
+        • <strong>Global reminder:</strong> Only 0.3% of Earth's total fresh water is easily accessible; protection and innovation matter.
+    </div>
+
+    <div class="footer-badge">
+        🌌 Uniform dark background — seamless reading · no distracting color breaks<br>
+        📘 Reference: WHO drinking water guidelines · USEPA · IAEA · UNESCO water data<br>
+        ♾️ Free to share, print & adapt for global water awareness.
+    </div>
+</div>
+</body>
+  </html>
